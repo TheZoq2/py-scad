@@ -44,6 +44,33 @@ class Module(Element):
         Element()
         self.name = name;
         self.parameters = parameters
+        self.children = []
+
+    def generateCode(self):
+        code = "module {}(".format(self.name);
+
+        for i in range(0, len(self.parameters)):
+            code += "{}".format(self.parameters[i]);
+            
+            if(i != len(self.parameters) - 1):
+                code += ","
+
+        code += ")\n{\n"
+        
+        #for child in self.children:
+        #    code += child.generateCode();
+        #    code += "\n"
+        code += Element.generateCode(self);
+
+        code += "}\n";
+
+        return code
+
+class Call(Element):
+    def __init__(self, name, parameters):
+        Element()
+        self.name = name;
+        self.parameters = parameters
 
     def generateCode(self):
         code = "{}(".format(self.name);
@@ -57,7 +84,6 @@ class Module(Element):
         code += ");"
 
         return code
-
 
 
 
